@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Dados sensíveis
+data/*.json
+data/*.csv
+data/*.xlsx
+!data/.gitkeep
+
+# Relatórios gerados
+reports/*.pdf
+reports/*.xlsx
+reports/*.png
+!reports/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
