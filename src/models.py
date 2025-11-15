@@ -45,19 +45,31 @@ class Transacao:
     def __post_init__(self):
         """Gera ID único se não fornecido"""
         if self.id is None:
-            # Copilot: gerar ID único baseado em timestamp e hash
             import hashlib
             import time
+            timestamp = str(time.time()).encode()
+            self.id = hashlib.md5(timestamp).hexdigest()[:12]
             
     def to_dict(self) -> dict:
         """Converte a transação para dicionário"""
-        # Copilot: converter para dict com data em string ISO format
+        return {
+            'id': self.id,
+            'data': self.data.isoformat(),
+            'valor': self.valor,
+            'categoria': self.categoria,
+            'descricao': self.descricao,
+            'tipo': self.tipo
+        }
         
     @classmethod
     def from_dict(cls, data: dict):
         """Cria transação a partir de dicionário"""
-        # Copilot: criar instância a partir de dict, convertendo string de data para datetime
+        data_copy = data.copy()
+        data_copy['data'] = datetime.fromisoformat(data_copy['data'])
+        return cls(**data_copy)
         
     def __str__(self) -> str:
         """Representação em string da transação"""
-        # Copilot: criar string formatada com todos os dados da transação
+        simbolo = "💵" if self.tipo == "receita" else "💸"
+        data_fmt = self.data.strftime("%d/%m/%Y")
+        return f"{simbolo} {data_fmt} | R$ {self.valor:.2f} | {self.categoria} | {self.descricao}"
